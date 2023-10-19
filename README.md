@@ -1,44 +1,44 @@
 # THUCTF2023
 
-这是一份THUCTF的Writeup By Sceleri。
+这是一份 THUCTF 的 Writeup By Sceleri。
 
-用markdown写的，所以pdf的排版可能会比较抽象。
+用 markdown 写的，所以 pdf 的排版可能会比较抽象。
 
-#### 一道难题
+### 一道难题
 
-base64解密即可
+base64 解密即可
 
 <img title="" src="pics/signin.png" alt="签到题" data-align="inline">
 
-#### 呀哈哈
+### 呀哈哈
 
 图片隐写题，把所有方法全试一遍就行（？）
 
-最后发现修改长宽后还有内容，拿tweakpng改了就行。
+最后发现修改长宽后还有内容，拿 tweakpng 改了就行。
 
-![yahaha](/Users/admin/Documents/THUCTF2023/pics/2yahaha_8f46d1d5aa96a5f97616444fe86c2d8a.png)
+![yahaha](pics/2yahaha_8f46d1d5aa96a5f97616444fe86c2d8a.png)
 
-#### KFC
+### KFC
 
 没有一点地名（看不清），不得已谷歌识图然后就出来了。
 
 截图忘截了，反正是巴黎的一家店。
 
-#### 未来磁盘
+### 未来磁盘
 
 直接解压！
 
 ![zip](pics/disk1.png)
 
-#### Dark(er) Room
+### Dark(er) Room
 
 翻看源码可以获得地图以及各种事件信息（但其实都是靠试）
 
-然后出来后知道需要117%的sanity，于是优化了路线，最后只需要连过3次help即可，算算概率发现竟然有1/125，直接写脚本刷。
+然后出来后知道需要 117%的 sanity，于是优化了路线，最后只需要连过 3 次 help 即可，算算概率发现竟然有 1/125，直接写脚本刷。
 
-在地图里可以发现一个flagroom，尝试获取flag可以发现它要我们猜公钥，于是乱输一堆搞崩后发现它在flag_number末位为1时会更新公钥且更新一次需要花1s，于是写一个脚本记一下时即可。
+在地图里可以发现一个 flagroom，尝试获取 flag 可以发现它要我们猜公钥，于是乱输一堆搞崩后发现它在 flag_number 末位为 1 时会更新公钥且更新一次需要花 1s，于是写一个脚本记一下时即可。
 
-两道题都是拿pwntools写的。
+两道题都是拿 pwntools 写的。
 
 ```python
 from pwn import *
@@ -142,9 +142,9 @@ def flag2():
 
 <img src="pics/darker.png" title="" alt="darker" width="441">
 
-#### 基本功
+### 基本功
 
-zip加密且密钥没法爆破，因此只能明文攻击。注意到文件名是一个zip爆破软件，所以直接找明文即可。第一题去找chromedriver，直接搜索文件大小就找得到。第二题是pcapng文件，在下面的题里用过，打开看看，再跟网上搜到的文件格式对比一下就可以猜出前16bytes的15个，然后用-x爆破即可。解出来后打开文件在最后发现了flag。
+zip 加密且密钥没法爆破，因此只能明文攻击。注意到文件名是一个 zip 爆破软件，所以直接找明文即可。第一题去找 chromedriver，直接搜索文件大小就找得到。第二题是 pcapng 文件，在下面的题里用过，打开看看，再跟网上搜到的文件格式对比一下就可以猜出前 16bytes 的 15 个，然后用-x 爆破即可。解出来后打开文件在最后发现了 flag。
 
 ![zip](pics/zip1.png)
 
@@ -152,17 +152,17 @@ zip加密且密钥没法爆破，因此只能明文攻击。注意到文件名�
 
 ![zip3](pics/zip2.png)
 
-#### easycrypto
+### easycrypto
 
-分析两个给的文件发现一个是字符替换另一是base64，且使用了同一套字符表，所以放在一起分析。随便在网上找了一个解密器，然后第一题就做出来了。然后去解第二题时发现字符表有很多没用过的字符有错，然后就开始痛苦修bug。。。反正靠ascii的字符编码比较稀疏强行修就行了（）
+分析两个给的文件发现一个是字符替换另一是 base64，且使用了同一套字符表，所以放在一起分析。随便在网上找了一个解密器，然后第一题就做出来了。然后去解第二题时发现字符表有很多没用过的字符有错，然后就开始痛苦修 bug。。。反正靠 ascii 的字符编码比较稀疏强行修就行了（）
 
 ![crypto1](pics/crypto1.png)
 
 ![crypto2](pics/crypto2.png)
 
-#### cookies
+### cookies
 
-在网上搜索后发现random库在624个int32后会可以预测，所以直接从网上找了一个库然后把前2496位输进去就解决了第一题。第二题的entropy太小了，直接搜索即可。
+在网上搜索后发现 random 库在 624 个 int32 后会可以预测，所以直接从网上找了一个库然后把前 2496 位输进去就解决了第一题。第二题的 entropy 太小了，直接搜索即可。
 
 ```python
 from random import Random
@@ -215,13 +215,13 @@ print(guess(0))
 
 ![cookie2](pics/cookie2.png)
 
-第三题似乎只需要输入相同的seed即可通过。然后测试的时候发现少输几个不会报错，结果只输入了一个就过了。。。原来是zip只会依据长度小的那个来结束（我不好评价）
+第三题似乎只需要输入相同的 seed 即可通过。然后测试的时候发现少输几个不会报错，结果只输入了一个就过了。。。原来是 zip 只会依据长度小的那个来结束（我不好评价）
 
 ![crypto3](pics/cookie3.png)
 
-#### Another V Me 50
+### Another V Me 50
 
-阅读源码可以发现一个账户要有50需要重复注册，而token只是sha256后14位，所以可以去撞哈希值。直接拿python的dict随便写了一个，然后它吃了16G内存。。。不过跑出来了就行。。。
+阅读源码可以发现一个账户要有 50 需要重复注册，而 token 只是 sha256 后 14 位，所以可以去撞哈希值。直接拿 python 的 dict 随便写了一个，然后它吃了 16G 内存。。。不过跑出来了就行。。。
 
 ```python
 from pwn import *
@@ -283,35 +283,35 @@ io.interactive()
 
 ![50](pics/anothervme50.png)
 
-#### nc
+### nc
 
 `nc ip port`
 
 ![nc](pics/nc.png)
 
-#### 禁止执行，启动
+### 禁止执行，启动
 
-观察后发现只有bin里的文件可以执行，然后看到了两个不是busybox创建的文件，一查发现是debugger，那随便debug一下busybox然后在rip处写入shellcode就行了。主要难点是现学lldb的语法~~以及修bug~~。（以及花了1个小时意识到548是十进制。。。）
+观察后发现只有 bin 里的文件可以执行，然后看到了两个不是 busybox 创建的文件，一查发现是 debugger，那随便 debug 一下 busybox 然后在 rip 处写入 shellcode 就行了。主要难点是现学 lldb 的语法~~以及修 bug~~。（以及花了 1 个小时意识到 548 是十进制。。。）
 
 ![shell](pics/lldb.png)
 
-#### babystack
+### babystack
 
-IDA打开后可以发现一个后门函数，然后注意到长度判断是用无符号写的，所以可以输入0后栈溢出，依靠提示可以知道要把栈变为16的倍数才能调用后门，所以多写一个空的ret即可。
+IDA 打开后可以发现一个后门函数，然后注意到长度判断是用无符号写的，所以可以输入 0 后栈溢出，依靠提示可以知道要把栈变为 16 的倍数才能调用后门，所以多写一个空的 ret 即可。
 
 ![baby](pics/baby1.png)
 
-#### 初学C语言
+### 初学 C 语言
 
-格式化字符串漏洞，所以只要疯狂%p%x然后看看里面哪些像ascii就行（问就是我也不会）
+格式化字符串漏洞，所以只要疯狂%p%x 然后看看里面哪些像 ascii 就行（问就是我也不会）
 
 ![printf](pics/printf.png)
 
-#### 简单的打字稿
+### 简单的打字稿
 
-~~用于推销typescript的题。~~
+~~用于推销 typescript 的题。~~
 
-typescript的类型不会在编译结果中出现，所以只能依靠报错来获取flag。推荐的方法是用函数传参来做，这样不需要去编一个实例出来。第一题简单传点数字就行。第二题需要将flag的值一层层提取出来，所以在网上查到了把union变intersection，获取返回值，获取参数类型的模板，然后一层层套用就行了。但是intersection变union的模板没找到，好在报错够短能过，就不管了。
+typescript 的类型不会在编译结果中出现，所以只能依靠报错来获取 flag。推荐的方法是用函数传参来做，这样不需要去编一个实例出来。第一题简单传点数字就行。第二题需要将 flag 的值一层层提取出来，所以在网上查到了把 union 变 intersection，获取返回值，获取参数类型的模板，然后一层层套用就行了。但是 intersection 变 union 的模板没找到，好在报错够短能过，就不管了。
 
 ![ts1](pics/ts1.png)
 
@@ -319,23 +319,23 @@ typescript的类型不会在编译结果中出现，所以只能依靠报错来�
 
 （一些趣事）
 
-本来没打算做第二问，但是在翻选手博客时发现了一篇关于typescript类型的文章，于是去做了，虽然这篇文章对最终做出来的答案没啥帮助（）
+本来没打算做第二问，但是在翻选手博客时发现了一篇关于 typescript 类型的文章，于是去做了，虽然这篇文章对最终做出来的答案没啥帮助（）
 
-#### Chrone1
+### Chrone1
 
-本来对问号后面到底怎么写才能改hostname没有一点想法，但是提示实在是太强了，直接塞爆然后报错就可以了。
+本来对问号后面到底怎么写才能改 hostname 没有一点想法，但是提示实在是太强了，直接塞爆然后报错就可以了。
 
 ![chrone](pics/chrone1.png)
 
-#### V ME 50
+### V ME 50
 
-反复观察devtools里面的东西，可以看到一个被注释的权限修改，进去后提交不通过，发现有一个隐藏的id栏，修改value为1后过了。进入管理员发现可以买kfc和flag，然后换了一个账号发现订单没有变，于是只需要开10个账号就可以退款买flag了。
+反复观察 devtools 里面的东西，可以看到一个被注释的权限修改，进去后提交不通过，发现有一个隐藏的 id 栏，修改 value 为 1 后过了。进入管理员发现可以买 kfc 和 flag，然后换了一个账号发现订单没有变，于是只需要开 10 个账号就可以退款买 flag 了。
 
 ![50](pics/vme50.png)
 
-#### emodle
+### emodle
 
-做这道题很明显靠js是不太够的，所以用了selenium来暴力搜索。第二问限制到了8次就没法解了，所以尝试去攻击session，结果session是用base64编码的，而且答案还在里面，直接抄就行了。（后来才知道这东西叫JWT）第三问删去了答案，且需要在1分钟内做完。但是注意到每次提交session都会更新，于是把session改回去后发现还可以玩，于是只要selenium继续暴力就行了。（selenium真好用）
+做这道题很明显靠 js 是不太够的，所以用了 selenium 来暴力搜索。第二问限制到了 8 次就没法解了，所以尝试去攻击 session，结果 session 是用 base64 编码的，而且答案还在里面，直接抄就行了。（后来才知道这东西叫 JWT）第三问删去了答案，且需要在 1 分钟内做完。但是注意到每次提交 session 都会更新，于是把 session 改回去后发现还可以玩，于是只要 selenium 继续暴力就行了。（selenium 真好用）
 
 ![emo1](pics/emo1.png)
 
@@ -343,9 +343,9 @@ typescript的类型不会在编译结果中出现，所以只能依靠报错来�
 
 ![emo3](pics/emo3.png)
 
-#### polynomials
+### polynomials
 
-纯逆向题。第一题可以很快发现是一个矩阵在F_p下求逆，然后上网抄代码（）。第二题是一堆奇怪玩意看不懂，选择手动写逆运算，然后看着那些常数觉得很怪，结果解出来发现是NTT。。。第三问吸取了教训，知道是多项式乘法，直接除回去。
+纯逆向题。第一题可以很快发现是一个矩阵在 F_p 下求逆，然后上网抄代码（）。第二题是一堆奇怪玩意看不懂，选择手动写逆运算，然后看着那些常数觉得很怪，结果解出来发现是 NTT。。。第三问吸取了教训，知道是多项式乘法，直接除回去。
 
 ```python
 import numpy
@@ -620,251 +620,258 @@ def reverse3():
 
 ![poly](pics/poly3.png)
 
-#### 扫雷
+### 扫雷
 
 重量级题目。
 
-简单玩玩就可以发现它有一个几乎固定的边框，而且里面的大块十分的方正，除了少数同一种特殊玩意。然后写脚本把所有大块都先点了。然后发现解不动了，于是去看右边的3个一组的玩意，折磨了好久，最后解出来是一个3-SAT。。。知道了就好办了，直接枚举就可以确定唯一解，然后让脚本把关键块点出来后疯狂右键就行了。
+简单玩玩就可以发现它有一个几乎固定的边框，而且里面的大块十分的方正，除了少数同一种特殊玩意。然后写脚本把所有大块都先点了。然后发现解不动了，于是去看右边的 3 个一组的玩意，折磨了好久，最后解出来是一个 3-SAT。。。知道了就好办了，直接枚举就可以确定唯一解，然后让脚本把关键块点出来后疯狂右键就行了。
 
-脚本采用了注入了render的方法来进行回调，然后就可以写了，甚至没有js压缩（）
+脚本采用了注入了 render 的方法来进行回调，然后就可以写了，甚至没有 js 压缩（）
 
 ```javascript
 async function sleep(t) {
-    return new Promise((resolve) => { setTimeout(resolve, t) })
+  return new Promise((resolve) => {
+    setTimeout(resolve, t);
+  });
 }
 
-
 function renderboard() {
-    if (!checkready()) {
-        setTimeout(renderboard, 100);
-        return;
-    }
-    console.log("rendering");
-    let boardx = boardobj.sizex;
-    let boardy = boardobj.sizey;
+  if (!checkready()) {
+    setTimeout(renderboard, 100);
+    return;
+  }
+  console.log("rendering");
+  let boardx = boardobj.sizex;
+  let boardy = boardobj.sizey;
 
-    if (boardobj.type == 0) {
-        board = [];
-        for (let i = 0; i < boardx; i++) {
-            board[i] = boardobj.board[i].split("");
-        }
+  if (boardobj.type == 0) {
+    board = [];
+    for (let i = 0; i < boardx; i++) {
+      board[i] = boardobj.board[i].split("");
     }
-    else {
-        for (let i = 0; i < boardobj.board.length; i++) {
-            let x = boardobj.board[i][0];
-            let y = boardobj.board[i][1];
-            let st = boardobj.board[i][2];
-            board[x][y] = st;
-        }
+  } else {
+    for (let i = 0; i < boardobj.board.length; i++) {
+      let x = boardobj.board[i][0];
+      let y = boardobj.board[i][1];
+      let st = boardobj.board[i][2];
+      board[x][y] = st;
     }
+  }
 
-    if (draw) {
-        for (let i = 0; i < boardx; i++) {
-            for (let j = 0; j < boardy; j++) {
-                let st = board[i][j];
-                if (lboard != undefined && lboard[i][j] == st) {
-                    continue;
-                }
-                let id = 0;
-                if (st == 'F')
-                    id = 10;
-                else if (st == '*')
-                    id = 11;
-                else if (st == '.')
-                    id = 9;
-                else
-                    id = parseInt(st);
-                ctx.drawImage(images[id], j * TILE_SIZE, i * TILE_SIZE, TILE_SIZE, TILE_SIZE);
-            }
+  if (draw) {
+    for (let i = 0; i < boardx; i++) {
+      for (let j = 0; j < boardy; j++) {
+        let st = board[i][j];
+        if (lboard != undefined && lboard[i][j] == st) {
+          continue;
         }
-        lboard = JSON.parse(JSON.stringify(board));
+        let id = 0;
+        if (st == "F") id = 10;
+        else if (st == "*") id = 11;
+        else if (st == ".") id = 9;
+        else id = parseInt(st);
+        ctx.drawImage(
+          images[id],
+          j * TILE_SIZE,
+          i * TILE_SIZE,
+          TILE_SIZE,
+          TILE_SIZE
+        );
+      }
     }
-    find()
+    lboard = JSON.parse(JSON.stringify(board));
+  }
+  find();
 }
 
 function find() {
-    if (first) {
-        first = false
-        callback()
-
-    }
+  if (first) {
+    first = false;
+    callback();
+  }
 }
 
 async function detect_times(t) {
-    for (var i = 0; i < t; i++) {
-        await run(0, 0, 'detect')
-        console.log(i + 1)
-    }
+  for (var i = 0; i < t; i++) {
+    await run(0, 0, "detect");
+    console.log(i + 1);
+  }
 }
 
-var callback = () => { }
-var first = true
-var draw = 1
+var callback = () => {};
+var first = true;
+var draw = 1;
 
-async function run(x, y, type = 'open') {
-    if (x >= boardobj.sizex || y >= boardobj.sizey) {
-        return new Promise((resolve) => { resolve() })
-    } if (type == 'open' && board[x][y] != '.') {
-        return new Promise((resolve) => { resolve() })
-    }
-    first = true
-    var c = new Promise((resolve) => { callback = resolve })
-    if (type == 'open') {
-        doopen(x, y)
-        console.log('run doopen(' + x + ', ' + y + ')')
-    }
-    if (type == 'detect') {
-        dodetect()
-        console.log('run dodetect()')
-    }
-    return c
+async function run(x, y, type = "open") {
+  if (x >= boardobj.sizex || y >= boardobj.sizey) {
+    return new Promise((resolve) => {
+      resolve();
+    });
+  }
+  if (type == "open" && board[x][y] != ".") {
+    return new Promise((resolve) => {
+      resolve();
+    });
+  }
+  first = true;
+  var c = new Promise((resolve) => {
+    callback = resolve;
+  });
+  if (type == "open") {
+    doopen(x, y);
+    console.log("run doopen(" + x + ", " + y + ")");
+  }
+  if (type == "detect") {
+    dodetect();
+    console.log("run dodetect()");
+  }
+  return c;
 }
 
 async function main() {
-    await run(0, 0)
-    let boardx = boardobj.sizex;
-    let boardy = boardobj.sizey;
-    locationy = new Array()
-    for (let i = 1; i < boardy; i++) {
-        if (board[1][i] == '3') {
-            locationy.push(i)
-        }
+  await run(0, 0);
+  let boardx = boardobj.sizex;
+  let boardy = boardobj.sizey;
+  locationy = new Array();
+  for (let i = 1; i < boardy; i++) {
+    if (board[1][i] == "3") {
+      locationy.push(i);
     }
-    console.log(locationy)
-    draw = 0
-    bin = []
-    for (let i = 0; i < locationy.length; i++) {
-        column = locationy[i] + 2
-        for (var j = 4; j < boardx; j++) {
-            var c = board[j][column]
-            if (c == '0')
-                continue
-            if (c == '.')
-                continue
-            if (j + 1 < boardx && board[j + 1][column] == '.') {
-                if (c == '1') {
-                    await run(j + 3, column)
-                }
-                if (c == '2') {
-                    await run(j + 1, column - 1)
-                    await run(j + 1, column)
-                    await run(j + 2, column)
-                    await run(j + 3, column)
-                    await run(j + 3, column + 2)
-                    await run(j + 4, column)
-                    await run(Math.floor(j / 3) * 3 - 1, column - 2)
-                    bin[j + 2] = column
-                    await run(j + 6, column)
-                }
-            }
+  }
+  console.log(locationy);
+  draw = 0;
+  bin = [];
+  for (let i = 0; i < locationy.length; i++) {
+    column = locationy[i] + 2;
+    for (var j = 4; j < boardx; j++) {
+      var c = board[j][column];
+      if (c == "0") continue;
+      if (c == ".") continue;
+      if (j + 1 < boardx && board[j + 1][column] == ".") {
+        if (c == "1") {
+          await run(j + 3, column);
         }
+        if (c == "2") {
+          await run(j + 1, column - 1);
+          await run(j + 1, column);
+          await run(j + 2, column);
+          await run(j + 3, column);
+          await run(j + 3, column + 2);
+          await run(j + 4, column);
+          await run(Math.floor(j / 3) * 3 - 1, column - 2);
+          bin[j + 2] = column;
+          await run(j + 6, column);
+        }
+      }
     }
-    draw = 1
-    console.log(bin)
-    await run(0, 0, 'detect')
-    await update()
+  }
+  draw = 1;
+  console.log(bin);
+  await run(0, 0, "detect");
+  await update();
 }
 
 async function update() {
-    await run(0, 0)
-    let boardx = boardobj.sizex;
-    let boardy = boardobj.sizey;
-    locationy = new Array()
-    for (let i = 1; i < boardy; i++) {
-        if (board[1][i] == '3') {
-            locationy.push(i)
-        }
+  await run(0, 0);
+  let boardx = boardobj.sizex;
+  let boardy = boardobj.sizey;
+  locationy = new Array();
+  for (let i = 1; i < boardy; i++) {
+    if (board[1][i] == "3") {
+      locationy.push(i);
     }
-    locationx = new Array()
-    for (let j = 1; j < boardx - 1; j++) {
-        if (board[j + 1][113] == "1" && board[j - 1][113] == "1") {
-            locationx.push(j)
-        }
+  }
+  locationx = new Array();
+  for (let j = 1; j < boardx - 1; j++) {
+    if (board[j + 1][113] == "1" && board[j - 1][113] == "1") {
+      locationx.push(j);
     }
-    // console.log(locationx)
-    // console.log(locationy)
-    mark = new Array()
+  }
+  // console.log(locationx)
+  // console.log(locationy)
+  mark = new Array();
+  for (var i = 0; i < locationx.length; i++) {
+    for (var j = 0; j < locationy.length; j++) {
+      if (board[locationx[i] + 1][locationy[j] - 3] == "3") {
+        if (
+          board[locationx[i] + 2][locationy[j] - 3] == "2" &&
+          board[locationx[i]][locationy[j] - 3] == "2"
+        ) {
+          //console.log(i, j)
+          mark[i] = j;
+        }
+      }
+    }
+  }
+  neg = new Array();
+  for (var i = 0; i < locationx.length; i++) {
+    neg[i] = board[locationx[i] + 1][117] == "3";
+  }
+  console.log(mark);
+  console.log(neg);
+  var result = new Array();
+  for (i = 0; i < 2 << locationy.length; i += 2) {
+    var b = new Array();
+    for (var j = 0; j < locationy.length; j++) {
+      b[j] = Boolean(i & (2 << j));
+    }
+    var flag = 1;
+    for (j = 0; j < locationx.length; j += 3) {
+      c = neg[j] ^ b[mark[j]];
+      c = c || neg[j + 1] ^ b[mark[j + 1]];
+      c = c || neg[j + 2] ^ b[mark[j + 2]];
+      if (!c) {
+        flag = 0;
+        break;
+      }
+    }
+    if (flag) {
+      result.push(b);
+      console.log(i);
+      // console.log(b)
+    }
+  }
+  console.log(result);
+  async function apply(r) {
+    for (var i = 0; i < locationy.length; i++) {
+      if (r[i]) {
+        await run(4, locationy[i]);
+      } else {
+        await run(3, locationy[i]);
+      }
+    }
     for (var i = 0; i < locationx.length; i++) {
-        for (var j = 0; j < locationy.length; j++) {
-            if (board[locationx[i] + 1][locationy[j] - 3] == "3") {
-                if (board[locationx[i] + 2][locationy[j] - 3] == "2" && board[locationx[i]][locationy[j] - 3] == "2") {
-                    //console.log(i, j)
-                    mark[i] = j
-                }
-            }
-        }
+      await run(locationx[i], 112);
+      if (r[mark[i]]) {
+        await run(locationx[i], 113);
+      } else {
+        await run(locationx[i], 111);
+      }
+      if (i % 3 == 0) {
+        await run(locationx[i], 138);
+        await run(locationx[i], 126);
+      }
     }
-    neg = new Array()
-    for (var i = 0; i < locationx.length; i++) {
-        neg[i] = board[locationx[i] + 1][117] == "3"
-    }
-    console.log(mark)
-    console.log(neg)
-    var result = new Array();
-    for (i = 0; i < (2 << locationy.length); i += 2) {
-        var b = new Array()
-        for (var j = 0; j < locationy.length; j++) {
-            b[j] = Boolean(i & 2 << j)
-        }
-        var flag = 1;
-        for (j = 0; j < locationx.length; j += 3) {
-            c = (neg[j] ^ b[mark[j]])
-            c = c || (neg[j + 1] ^ b[mark[j + 1]])
-            c = c || (neg[j + 2] ^ b[mark[j + 2]])
-            if (!c) {
-                flag = 0;
-                break
-            }
-        }
-        if (flag) {
-            result.push(b)
-            console.log(i)
-            // console.log(b)
-        }
-    }
-    console.log(result)
-    async function apply(r) {
-        for (var i = 0; i < locationy.length; i++) {
-            if (r[i]) {
-                await run(4, locationy[i])
-            }
-            else {
-                await run(3, locationy[i])
-            }
-        }
-        for (var i = 0; i < locationx.length; i++) {
-            await run(locationx[i], 112)
-            if (r[mark[i]]) {
-                await run(locationx[i], 113)
-            }
-            else {
-                await run(locationx[i], 111)
-            }
-            if (i % 3 == 0) {
-                await run(locationx[i], 138)
-                await run(locationx[i], 126)
-            }
-        }
-    }
-    apply(result[0])
+  }
+  apply(result[0]);
 }
 
-main()
+main();
 ```
 
 ![mine](pics/mine.png)
 
-#### 汉化！
+### 汉化！
 
-~~还好我之前拆过~~。去网上找kirikiri2的解包软件即可。打开在最后一个场景就可以发现flag（我被骗了）第二问需要研究它是怎么判断相等的，发现是一个哈希，但爆破这个哈希会有很多解，于是继续去拆存档，注意到除了data0以外的另外两个文件也是可以拆的，然后就发现了游戏所有选项的选择次数，于是就加上限制条件继续枚举就解出来了。
+~~还好我之前拆过~~。去网上找 kirikiri2 的解包软件即可。打开在最后一个场景就可以发现 flag（我被骗了）第二问需要研究它是怎么判断相等的，发现是一个哈希，但爆破这个哈希会有很多解，于是继续去拆存档，注意到除了 data0 以外的另外两个文件也是可以拆的，然后就发现了游戏所有选项的选择次数，于是就加上限制条件继续枚举就解出来了。
 
 ![green](pics/green1.png)
 
 ![green2](pics/green2.png)
 
-#### 流量包
+### 流量包
 
-打开第二题的流量包，发现很多的ascii字符，于是去搜索了一下发现是一个古老的协议。用lrzsz链接即可。第二题需要去翻协议细节，然后在知乎上找到了一个实现的源码，然后用python抄一份就行（问就是不会写cmake）但是需要注意把源码的crc16换成crc32，不然就得自己在本地抓包修bug了。
+打开第二题的流量包，发现很多的 ascii 字符，于是去搜索了一下发现是一个古老的协议。用 lrzsz 链接即可。第二题需要去翻协议细节，然后在知乎上找到了一个实现的源码，然后用 python 抄一份就行（问就是不会写 cmake）但是需要注意把源码的 crc16 换成 crc32，不然就得自己在本地抓包修 bug 了。
 
 ```python
 import os
@@ -931,17 +938,17 @@ with open("flag3.jpg", "wb") as fp:
 
 ![z2](pics/z2.jpg)
 
-#### 喵
+### 喵
 
 做这道题需要写一个简易编译器喵。
 
-可以修改一下filtered实现debug喵。
+可以修改一下 filtered 实现 debug 喵。
 
-第一题重复把字符换成emoji谢谢喵。
+第一题重复把字符换成 emoji 谢谢喵。
 
-重复把10个emoji换成另一个emoji谢谢喵。
+重复把 10 个 emoji 换成另一个 emoji 谢谢喵。
 
-剩下的emoji就是个位数喵。
+剩下的 emoji 就是个位数喵。
 
 重复这件事喵。
 
