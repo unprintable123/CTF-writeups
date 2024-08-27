@@ -37,6 +37,41 @@ Check `master-spark.sage` for more details.
 
 The most difficult 3 challenges are authored by Neobeo. All of them are intersesting and I really like(not solving) them. Here is [Neobeo's writeup](https://github.com/Neobeo/SekaiCTF2024).
 
+```python
+from Crypto.Util.number import bytes_to_long, getPrime
+from secrets import token_bytes, randbelow
+from flag import FLAG
+
+padded_flag = bytes_to_long(FLAG + token_bytes(128 - len(FLAG)))
+
+p, q, r = getPrime(512), getPrime(512), getPrime(512)
+N = e = p * q * r
+phi = (p - 1) * (q - 1) * (r - 1)
+d = pow(e, -1, phi)
+
+# Genni likes squares and SBG likes cubes. Let's calculate their values
+value_for_genni = p**2 + (q + r * padded_flag)**2
+value_for_sbg   = p**3 + (q + r * padded_flag)**3
+
+x0 = randbelow(N)
+x1 = randbelow(N)
+
+print(f'{N = }')
+print(f'{x0 = }')
+print(f'{x1 = }')
+print('\nDo you prefer squares or cubes? Choose wisely!')
+
+# Generate a random k and send v := (x_i + k^e), for Oblivious Transfer
+# This will allow you to calculate either Genni's or SBG's value
+# I have no way of knowing who you support. Your secret is completely safe!
+v = int(input('Send me v: '))
+
+m0 = (pow(v - x0, d, N) + value_for_genni) % N
+m1 = (pow(v - x1, d, N) + value_for_sbg) % N
+print(f'{m0 = }')
+print(f'{m1 = }')
+```
+
 ### First attempt
 
 The challenge performs an OT with a square sum and a cude sum. The first question is how to get the flag if I have these two value. My method is to calculate $(p^2+C^2)^3-(p^3+C^3)^2=p(...)$ and gcd with $N$ to get $p$, but the problem is that you can't eliminate $v-x0$ and $v-x1$ when trying to get the expression. You can only control relations like `(v-x0)=-(v-x1)` and get the sum of two equations.
@@ -77,6 +112,10 @@ The code of the first step is in `svc.sage`.
 
 It will become my favourite crypto of this year.
 ~~Though I would say it is a reverse engineering after releasing the hint.~~
+
+```python
+assert __import__('re').fullmatch(rb'SEKAI{\w{32}}', flag:=input().encode()) and [pow(int.from_bytes(flag[6:-1], 'big') + i, -1, 2**255-19) >> 170 for i in range(1+3+3+7)] == [29431621415867921698671444, 12257315102018176664717361, 6905311467813097279935853, 13222913226749606936127836, 25445478808277291772285314, 9467767007308649046406595, 33796240042739223741879633, 520979008712937962579001, 31472015353079479796110447, 38623718328689304853037278, 17149222936996610613276307, 21988007084256753502814588, 11696872772917077079195865, 6767350497471479755850094]
+```
 
 ### Some Basic Analysis
 
