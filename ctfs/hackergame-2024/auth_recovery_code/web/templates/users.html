@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User List</title>
+    <link rel="stylesheet" href="/static/user_styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>User List</h1>
+            <h3><div id="bonus-info"></div></h3>
+        </header>
+        <main>
+            <div id="current-user-info">
+            </div>
+            <br>
+            <table class="user-table">
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Admin</th>
+                    </tr>
+                </thead>
+                <tbody id="user-list">
+                </tbody>
+            </table>
+        </main>
+    </div>
+
+    <script>
+        const userList = document.getElementById('user-list');
+        const currentUserInfo = document.getElementById('current-user-info');
+        const token = localStorage.getItem('token');
+        const info = localStorage.getItem('info');
+        if (info && info.includes('flag')) {
+            const bonus_info = document.getElementById('bonus-info');
+            bonus_info.textContent = info;
+            bonus_info.style.color = 'green';
+        }
+        fetch('/users', {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+            })
+            .then(response => response.json())
+            .then(([currentUser, users]) => {
+                currentUserInfo.innerHTML = '';
+                const row = document.createElement('tr');
+                const usernameCell = document.createElement('td');
+                const adminCell = document.createElement('td');
+                usernameCell.textContent = atob(currentUser.username) + ' (You)';
+                adminCell.textContent = currentUser.admin ? 'Yes' : 'No';
+                usernameCell.style.fontWeight = 'bold';
+                row.appendChild(usernameCell);
+                row.appendChild(adminCell);
+                userList.appendChild(row);
+
+                users.forEach(user => {
+                    const row = document.createElement('tr');
+                    const usernameCell = document.createElement('td');
+                    const adminCell = document.createElement('td');
+                    usernameCell.textContent = atob(user.username);
+                    adminCell.textContent = user.admin ? 'Yes' : 'No';
+                    row.appendChild(usernameCell);
+                    row.appendChild(adminCell);
+                    userList.appendChild(row);
+                });
+            })
+            .catch(error => {
+                console.log('Error fetching user data:', error);
+                const userInfo = document.createElement('p');
+                userInfo.textContent = 'You must be logged in to view this page.';
+                userInfo.style.textAlign = 'center';
+                userInfo.style.fontWeight = 'bold';
+                userInfo.style.color = 'red';
+                currentUserInfo.appendChild(userInfo);
+                });
+    </script>
+</body>
+</html>

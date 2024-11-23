@@ -1,0 +1,3 @@
+[D-BUS Service]
+Name=cn.edu.ustc.lug.hack.FlagService
+Exec=/usr/bin/flagserver

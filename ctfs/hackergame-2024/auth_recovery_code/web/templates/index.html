@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<!-- templates modified from https://github.com/sagargoswami2001/Sign-Up-and-Login-Page -->
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Ultra-Secure Auth System</title>
+    <link rel="stylesheet" href="./static/styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+  <body>
+    <div class="wrapper">
+       <div class="title-text">
+          <div class="title login">Account</div>
+          <div class="title signup">Account</div>
+          <div class="title recovery">Account</div>
+       </div>
+       <div class="form-container">
+          <div class="slide-controls">
+             <input type="radio" name="slide" id="login" checked>
+             <input type="radio" name="slide" id="signup">
+             <input type="radio" name="slide" id="recovery">
+             <label for="login" class="slide login">Login</label>
+             <label for="signup" class="slide signup">SignUp</label>
+             <label for="recovery" class="slide recovery">Recover</label>
+             <div class="slider-tab"></div>
+          </div>
+          <div class="form-inner">
+             <form action="#" class="login">
+                <div class="field">
+                   <input type="text" placeholder="Username" required>
+                </div>
+                <div class="field">
+                   <input type="password" placeholder="Password" required>
+                </div>
+                <div class="recovery-link">
+                   <a href="#">Reset password?</a>
+                </div>
+                <div class="field btn">
+                   <div class="btn-layer"></div>
+                   <input type="submit" value="Login">
+                </div>
+                <div class="signup-link">
+                   Don't Have Account? <a href="">Create A New</a>
+                </div>
+                <center><p id="statusMessage"></p></center>
+             </form>
+             <form action="#" class="signup">
+                <div class="field">
+                   <input type="text" placeholder="Username" required>
+                </div>
+                <div class="field">
+                   <input type="password" placeholder="Password" required>
+                </div>
+                <div class="field">
+                   <input type="password" placeholder="Confirm Password" required>
+                </div>
+                <div class="field btn">
+                   <div class="btn-layer"></div>
+                   <input type="submit" value="SignUp">
+                </div>
+                <center><p id="statusMessage"></p></center>
+             </form>
+             <form action="#" class="recovery">
+                <div class="field">
+                   <input type="text" placeholder="Recovery Code" required>
+                </div>
+                <div class="field">
+                   <input type="password" placeholder="New Password" required>
+                </div>
+                <div class="field">
+                   <input type="password" placeholder="Confirm New Password" required>
+                </div>
+                <br>
+                <div>
+                   <input type="checkbox" id="super-checkbox" name="super">
+                   <label for="super">SuperMode</label>
+                </div>
+                <div class="field btn">
+                   <div class="btn-layer"></div>
+                   <input type="submit" value="Recover">
+                </div>
+                <center><p id="statusMessage"></p></center>
+             </form>
+          </div>
+       </div>
+    </div>
+
+    <div id="recovery-code-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span id="close_code" class="close">&times;</span>
+            <p>Your recovery code: </p>
+            <pre id="recovery-code" class="recovery-code"></pre>
+            <p class="warning-text">Copy the recovery code which can recover your account if you forget both username and password. You will not be able to see it again.</p>
+            <center>
+                <button id="copy-button">Copy</button>
+                <button id="confirm-button">Confirm</button>
+            </center>
+        </div>
+     </div>
+
+     <div id="recovered-account" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span id="close_recovered" class="close">&times;</span>
+            <p>Account Recovery Successful!</p>
+            <table class="recovery-info-table">
+                <tr>
+                    <th>Username</th>
+                    <td id="recovered-username"></td>
+                </tr>
+                <tr>
+                    <th>New Password</th>
+                    <td id="recovered-password"></td>
+                </tr>
+                <tr>
+                    <th>New Recovery Code</th>
+                    <td><pre id="new-recovery-code" class="recovery-code"></pre></td>
+                </tr>
+            </table>
+            <p class="warning-text">Please save this information securely. You will not be able to see it again.</p>
+            <center>
+                <button id="copy-recovered-info">Copy</button>
+                <button id="confirm-recovered-info">Confirm</button>
+            </center>
+        </div>
+    </div>
+
+    <script src="./static/index.js"></script>
+  </body>
+</html>
