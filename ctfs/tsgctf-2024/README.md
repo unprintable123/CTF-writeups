@@ -22,6 +22,6 @@ The signature doesn't use hash function, so we can forge the signature by making
 
 The challenge asks to do discrete log on elliptic curve over $Q_p$. Similar to $Z_{P^n}$, I guess the order of the curve is $kp^7$, where $k$ is the order of the curve over something like $Z_p$. So I use some small primes to find the $k$ and surpringly find that $k\in\{p-1,p,p+1\}$ (I don't know why). And the idea of Smart Attack is to lift $F_p$ to $Q_p$, it is reasonable to guess Smart Attack works here for the $p^7$ part. So I find a prime such that $p+1$ and $p-1$ are smooth.
 
-In fact, even the $p^7$ part is enough to pass the challenge because the secret is $2^1600$, but $p$ is only required to larger than $2^200$.
+In fact, even the $p^7$ part is enough to pass the challenge because the secret is $2^{1600}$, but $p$ is only required to larger than $2^{200}$.
 
 The code is in `easy_ecdlp2/problem.sage`
