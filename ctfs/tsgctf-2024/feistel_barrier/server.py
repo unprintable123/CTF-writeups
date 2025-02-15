@@ -14,7 +14,7 @@ def mgf(seed,mask_len):
     return t[:mask_len]
 
 def xor(a, b):
-    return bytes(x ^^ y for x, y in zip(a, b))
+    return bytes(x ^ y for x, y in zip(a, b))
 
 def encrypt(data, e,n):
     if len(data) > k - 2*h_len - 2:

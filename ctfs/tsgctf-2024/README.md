@@ -12,7 +12,7 @@ Send `n+chal` and we can decrypt `chal`. I played it in sage interactive mode th
 
 ## CONPASS
 
-The signature doesn't use hash function, so we can forge the signature by making `{"time":0, "somehthing":"..."} mod n=s^e`. Since all non-printable chars are filtered, only `"` will break the json, LLL is not necessary. Code is in `CONPASS/solve.py`.
+The signature doesn't use hash function, so we can forge the signature by making `{"time":0, "something":"..."} mod n=s^e`. Since all non-printable chars are filtered, only `"` will break the json, LLL is not necessary. Code is in `CONPASS/solve.py`.
 
 ## Easy? ECDLP
 
