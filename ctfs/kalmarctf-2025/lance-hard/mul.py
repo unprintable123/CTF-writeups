@@ -8,6 +8,7 @@ from functools import lru_cache
 from tqdm import tqdm
 from subprocess import check_output
 from sage.misc.persist import SagePickler, SageUnpickler
+import pickle
 import base64
 import time, threading
 from random import randbytes
@@ -173,9 +174,10 @@ class fast_MV_Element:
                 sys.stderr.write("Error: \n" + err.decode())
                 continue
             out = out.strip()
-            partial = SageUnpickler.loads(base64.b64decode(out))
+            # partial = SageUnpickler.loads(base64.b64decode(out))
+            partial = pickle.loads(base64.b64decode(out))
             assert len(partial) == n
-            new_coeffs = [a + b for a, b in zip(new_coeffs, partial)]
+            new_coeffs = [a + R0(b) for a, b in zip(new_coeffs, partial)]
         job.join()
         for log_file in logs:
             if os.path.exists(log_file):

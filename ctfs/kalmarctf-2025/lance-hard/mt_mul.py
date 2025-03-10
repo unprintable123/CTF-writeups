@@ -1,7 +1,8 @@
 from sage.all import *
 from mul import fast_MV_Element, fast_MV_Ring
 import sys
-from sage.misc.persist import SagePickler, SageUnpickler
+# from sage.misc.persist import SagePickler, SageUnpickler
+import pickle
 import base64
 
 p = 1208925819614629174706189
@@ -16,7 +17,15 @@ log_file = sys.argv[4]
 f1, f2 = load(tmp_file)
 
 f = f1.mul_part(f2, index, num_threads, log_file)
-print(base64.b64encode(SagePickler.dumps(f.coeffs)).decode())
+
+def to_list(poly):
+    if hasattr(poly, "list"):
+        return list(map(int, poly.list()))
+    else:
+        return [int(poly)]
+
+coeffs = [to_list(poly) for poly in f.coeffs]
+print(base64.b64encode(pickle.dumps(coeffs)).decode())
 
 
 
