@@ -1,3 +1,4 @@
 .DS_store
 README.pdf
 __pycache__
+*.sage.py
