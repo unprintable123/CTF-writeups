@@ -83,7 +83,6 @@ def find_a():
             return False
 
     for GUESS_BIT2 in range(960, 980):
-    # for DEBUG_BIT2 in [v2p(int(float(states[0]*debug_a)))]:
         s1 = states[1] >> NBIT
         s0 = states[0] >> NBIT
         m0 = m >> NBIT
