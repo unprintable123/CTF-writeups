@@ -1,0 +1,41 @@
+root@123-computer:/mnt/e/tsinghua2/ctf/sekai/dream# g++ -O3 -fopenmp solve.cpp  -o solve && ./solve
+Size: 50108000, 11929247
+^C
+root@123-computer:/mnt/e/tsinghua2/ctf/sekai/dream# ^C
+root@123-computer:/mnt/e/tsinghua2/ctf/sekai/dream# g++ -O3 -fopenmp solve.cpp  -o solve && ./solve
+Size: 3533197, 4151617
+Found: x=1162427924, y=939256584, x*y=1091818081042451616
+Found: x=4155446764, y=985218994, x*y=4094025080448635416
+Found: x=1385149553, y=917471359, x*y=1270835042809152527
+Found: x=1978713684, y=871732229, x*y=1724908490306121636
+Found: x=4982431217, y=966357971, x*y=4814812121507180707
+root@123-computer:/mnt/e/tsinghua2/ctf/sekai/dream# g++ -O3 -fopenmp solve.cpp  -o solve && ./solve
+Size: 28620026, 33630502
+Found: x=11463571782, y=9525932888, x*y=109201215452102566416
+Found: x=21775548542, y=9617242693, x*y=209420735101616303606
+Found: x=13793315124, y=9217575326, x*y=127140921150725030424
+Found: x=35167191323, y=9812572488, x*y=345080614056302121624
+Found: x=16237182286, y=9489482863, x*y=154082463046404164818
+Found: x=16278724883, y=9465375287, x*y=154084240211420166421
+root@123-computer:/mnt/e/tsinghua2/ctf/sekai/dream# g++ -O3 -fopenmp solve.cpp  -o solve && ./solve
+^C
+root@123-computer:/mnt/e/tsinghua2/ctf/sekai/dream# ^C
+root@123-computer:/mnt/e/tsinghua2/ctf/sekai/dream# g++ -O3 -fopenmp solve.cpp  -o solve && ./solve
+Size: 28620026, 272393388
+Found: x=119244931645, y=91484669965, x*y=10909083216541809542425
+Found: x=139532914194, y=89449871314, x*y=12481201218720704030916
+Found: x=249815131934, y=94615886324, x*y=23636480125082406270616
+Found: x=759191344487, y=98225595361, x*y=74572021805153620124807
+Found: x=469459862351, y=96822592651, x*y=45454321018405404182501
+Found: x=664199835214, y=98512597338, x*y=65432050918402735060332
+root@123-computer:/mnt/e/tsinghua2/ctf/sekai/dream# g++ -O3 solve.cpp  -o solve && ./solve
+Size1: 231592767
+Finished processing map
+^C^C^C^C^C^C^C
+root@123-computer:/mnt/e/tsinghua2/ctf/sekai/dream# g++ -O3 solve.cpp  -o solve && ./solve
+Size1: 231592767
+Finished processing map
+Size2: 272393388
+Found: x=1686345623855, y=881436225293, x*y=1486406121230120415164515
+Found: x=3763388674722, y=965516842641, x*y=3633615150848482808420802
+Found: x=8827954385162, y=987958187368, x*y=8721649812532036435033616
