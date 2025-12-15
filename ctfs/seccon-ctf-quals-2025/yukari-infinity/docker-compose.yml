@@ -1,0 +1,10 @@
+services:
+  yukari-infinity:
+    build:
+      context: .
+    ulimits:
+      core: 0
+    ports:
+      - "13910:13910"
+    restart: unless-stopped
+    privileged: true

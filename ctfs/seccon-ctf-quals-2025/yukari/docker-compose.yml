@@ -1,0 +1,10 @@
+services:
+  yukari:
+    build:
+      context: .
+    ulimits:
+      core: 0
+    ports:
+      - "15809:15809"
+    restart: unless-stopped
+    privileged: true
