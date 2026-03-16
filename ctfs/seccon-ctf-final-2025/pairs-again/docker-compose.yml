@@ -1,0 +1,7 @@
+services:
+  pairs-again:
+    build:
+      context: .
+    ports:
+      - "13520:13520"
+    restart: unless-stopped

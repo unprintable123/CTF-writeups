@@ -3,4 +3,4 @@ README.pdf
 __pycache__
 *.sage.py
 .vscode
-
+*.tar.gz
